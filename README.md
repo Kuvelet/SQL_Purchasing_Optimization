@@ -40,7 +40,8 @@ Given the numerous active vendor channels and rapidly fluctuating automotive par
 ---
 **1.** Each vendor quote is provided in Excel files with varying formats, layouts, and styles. Before proceeding, the relevant data—Part#, FOB cost, and Date—should be extracted using Excel and saved as CSV files for consistency and ease of processing. If the quote is coming from an EDI or an ERP system, the same applies—data should be extracted in a structured format and saved as CSVs for seamless analysis and integration.
 
-**2.** Import all above mentioned csv's 
+**2.**  All the CSV files mentioned above need to be imported into SSMS. I have provided the import script for Vendor A as an example. Each quote from each vendor should be imported into the database in the same manner.
+
 ```sql
 USE Master;
 
