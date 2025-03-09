@@ -159,7 +159,86 @@ The table below provides an example of the intended structure of the Vendor_A_Qu
 
 ### Analysis
 
-**1.** After consolidating all quotes for each vendor, the dataset needs further refinement to enhance visibility and improve price tracking. To achieve this, additional columns should be introduced to display dates more clearly, allowing for easier analysis of price changes over time. Additionally, two key columns should be created: `Active FOB`, which reflects the most relevant price, and `Most Recent Quote Date`, which captures the latest available quote for each part. These adjustments will ensure better data organization and facilitate more informed decision-making."
+**1.** After consolidating all quotes for each vendor, the dataset requires further refinement to enhance visibility and improve price tracking. To achieve this, additional columns should be introduced to display dates more clearly, allowing for easier analysis of price fluctuations over time. Additionally, two key columns should be created: Active FOB, which reflects the most up-to-date and relevant price, and Most Recent Quote Date, which captures the latest available quote for each part. These adjustments will improve data organization and facilitate more informed decision-making.
+
+To implement these transformations in SQL, I will use the Vendor_A_Quotes_Master table as the foundation to structure and refine the data. This process will ultimately generate the Vendor_A_FOB table, which will provide a streamlined view of the most relevant pricing information for Vendor A.
+
+To automate the creation of this table, we will develop a stored procedure that extracts, transforms, and loads (ETL) the necessary data from the Vendor_A_Quotes_Master table. This stored procedure will ensure that the Vendor_A_FOB table remains updated with the latest pricing information, improving efficiency and data accuracy while enabling seamless price tracking over time.
+
+The following SQL query creates the stored procedure responsible for generating and maintaining the Vendor_A_FOB table:
+
+```sql
+USE [Master]
+GO
+
+SET ANSI_NULLS ON
+GO
+SET QUOTED_IDENTIFIER ON
+GO
+
+-- Creating a new stored procedure named Vendor_A_FOB_Update
+CREATE PROCEDURE [dbo].[Vendor_A_FOB_Update]
+AS
+BEGIN
+    -- Prevents extra result sets from interfering with SELECT statements
+    SET NOCOUNT ON;
+
+    -- Declaring variables to store dynamic SQL query
+    DECLARE @columns NVARCHAR(MAX), @sql NVARCHAR(MAX);
+
+    -- Dynamically generating column names for pivoting, based on unique dates in Vendor_A_Quotes_Master
+    SELECT @columns = STRING_AGG(QUOTENAME(CONVERT(VARCHAR(10), Date, 120) + '_FOB'), ',')
+    FROM (SELECT DISTINCT Date FROM Vendor_A_Quotes_Master) AS Dates;
+
+    -- Constructing the dynamic SQL query
+    SET @sql = '
+    -- Check if the table Vendor_A_FOB already exists, and drop it if it does
+    IF OBJECT_ID(''dbo.Vendor_A_FOB'', ''U'') IS NOT NULL
+        DROP TABLE dbo.Vendor_A_FOB;
+
+    -- Using a Common Table Expression (CTE) to assign row numbers for ranking
+    WITH RankedData AS (
+        SELECT 
+            PartNumber,  -- The unique identifier for parts
+            VendorA_FOB, -- The FOB (Freight On Board) cost from Vendor A
+            Date,        -- Date of the FOB entry
+            ROW_NUMBER() OVER (PARTITION BY PartNumber ORDER BY Date DESC) AS rn
+            -- Assigns a row number for each PartNumber, ordering by Date in descending order
+            -- The most recent date will have rn = 1
+        FROM 
+            Vendor_A_Quotes_Master
+    )
+    -- Creating the final result table Vendor_A_FOB
+    SELECT 
+        r.PartNumber,           -- The part number
+        r.VendorA_FOB AS FOB_VendorA_Active, -- The latest FOB price from Vendor A
+        r.Date AS Most_Recent_Date,          -- The most recent date for the FOB price
+        ' + @columns + '                     -- Dynamically generated columns for pivoted FOB values
+    INTO dbo.Vendor_A_FOB  -- Saving results into a new table
+    FROM 
+        RankedData r
+    LEFT JOIN 
+        (SELECT 
+             PartNumber, 
+             VendorA_FOB, 
+             CONVERT(VARCHAR(10), Date, 120) + ''_FOB'' AS Date_FOB
+             -- Creating a new column Date_FOB in format YYYY-MM-DD_FOB
+         FROM Vendor_A_Quotes_Master) AS SourceTable
+    PIVOT
+        (MAX(VendorA_FOB) FOR Date_FOB IN (' + @columns + ')) AS PivotTable
+        -- Pivoting FOB values based on dates, so each date becomes a separate column
+    ON r.PartNumber = PivotTable.PartNumber
+    WHERE 
+        r.rn = 1  -- Ensures that we only take the most recent FOB price per PartNumber
+    ORDER BY 
+        r.PartNumber;  -- Sorting the results by PartNumber
+    ';
+
+    -- Executing the dynamically constructed SQL query
+    EXEC sp_executesql @sql;
+END;
+GO
+```
 
 
 
