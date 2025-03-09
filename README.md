@@ -158,13 +158,19 @@ The table below provides an example of the intended structure of the Vendor_A_Qu
 
 ### Analysis
 
-**1.** After consolidating all quotes for each vendor, the dataset requires further refinement to enhance visibility and improve price tracking. To achieve this, additional columns should be introduced to display dates more clearly, allowing for easier analysis of price fluctuations over time. Additionally, two key columns should be created: `Vendor_A_FOB_Active`, which reflects the most up-to-date and relevant price, and `Most_Recent_Date`, which captures the latest available quote for each part. These adjustments will improve data organization and facilitate more informed decision-making.
+**1.** After consolidating all vendor quotes, the dataset requires further refinement to enhance visibility and improve price tracking. To achieve this, additional columns will be introduced to display dates more clearly, making it easier to analyze price fluctuations over time. Key enhancements include:  
 
-To implement these transformations in SQL, I will use the `Vendor_A_Quotes_Master` table as the foundation to structure and refine the data. This process will ultimately generate the `Vendor_A_FOB` table, which will provide a streamlined view of the most relevant pricing information for Vendor A.
+- **`Vendor_A_FOB_Active`**, which reflects the most up-to-date and relevant price.  
+- **`Most_Recent_Date`**, which captures the latest available quote for each part.  
+- **Dynamically generated columns based on the unique dates** available in the `Vendor_A_Quotes_Master` table, ensuring a more flexible and adaptive structure for tracking price changes.  
 
-To automate the creation of this table, we will develop a stored procedure that extracts, transforms, and loads (ETL) the necessary data from the `Vendor_A_Quotes_Master` table. This stored procedure will ensure that the `Vendor_A_FOB` table remains updated with the latest pricing information, improving efficiency and data accuracy while enabling seamless price tracking over time.
+These improvements will enhance data organization and facilitate more informed decision-making.  
 
-The following SQL query creates the stored procedure responsible for generating and maintaining the `Vendor_A_FOB` table:
+To implement these transformations, the `Vendor_A_Quotes_Master` table will serve as the foundation for structuring and refining the data. The result will be the `Vendor_A_FOB` table, which provides a streamlined view of the most relevant pricing information for Vendor A.  
+
+To automate this process, a stored procedure will be developed to extract, transform, and load (ETL) the necessary data from the `Vendor_A_Quotes_Master` table. This stored procedure will keep the `Vendor_A_FOB` table continuously updated with the latest pricing information, improving efficiency, data accuracy, and price tracking over time.  
+
+The following SQL query defines the stored procedure responsible for generating and maintaining the `Vendor_A_FOB` table:
 
 ```sql
 USE [Master]
@@ -238,7 +244,7 @@ BEGIN
 END;
 GO
 ```
-rsult shoudl bee
+
 
 | PartNumber | FOB_Heb_Active | Most_Recent_Date | 2024-03-15_FOB | 2024-07-26_FOB | 2024-08-29_FOB | 2024-11-18_FOB | 2025-01-05_FOB |
 |------------|---------------|------------------|----------------|----------------|----------------|----------------|----------------|
