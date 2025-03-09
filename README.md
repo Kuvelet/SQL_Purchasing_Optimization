@@ -145,22 +145,21 @@ The table below provides an example of the intended structure of the Vendor_A_Qu
 |------------|------------|------------|
 | P1001      | 120.19     | 2024-03-15 |
 | P1001      | 119.58     | 2024-07-26 |
-| P1001      | 120.50     | 2024-11-18 |
-| P1001      | 122.84     | 2024-08-29 |
 | P1001      | 121.34     | 2025-01-05 |
 | P1002      | 210.45     | 2024-03-15 |
-| P1002      | 211.92     | 2024-07-26 |
 | P1002      | 209.78     | 2024-11-18 |
 | P1002      | 212.36     | 2024-08-29 |
 | P1002      | 210.89     | 2025-01-05 |
 | P1003      | 175.32     | 2024-03-15 |
 | P1003      | 176.89     | 2024-07-26 |
-| P1003      | 174.55     | 2024-11-18 |
 | P1003      | 177.12     | 2024-08-29 |
 | P1003      | 175.98     | 2025-01-05 |
 
 > **Note:** This table is a representative sample and does not include all records from the actual dataset. Part numbers and pricing information have been modified for confidentiality.
 
+### Analysis
+
+**1.** After consolidating all quotes for each vendor, the dataset needs further refinement to enhance visibility and improve price tracking. To achieve this, additional columns should be introduced to display dates more clearly, allowing for easier analysis of price changes over time. Additionally, two key columns should be created: `Active FOB`, which reflects the most relevant price, and `Most Recent Quote Date`, which captures the latest available quote for each part. These adjustments will ensure better data organization and facilitate more informed decision-making."
 
 
 
