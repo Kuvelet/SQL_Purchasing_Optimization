@@ -288,28 +288,19 @@ This example highlights the importance of evaluating LDP costs rather than relyi
 | Inland Transport | $15          | $12          | $11          |
 | **Total LDP Cost**   | **$209**     | **$183**     | **$175**     |
 
-Due to the complex and fluctuating nature of LDP (Landed Duty Paid) costs—such as variations in freight charges, import duties, customs fees, and taxes—a dedicated "LDP factor" is assigned to each vendor within MS Access. This approach enables easier, faster, and real-time manipulation of cost data, ensuring more efficient analysis and decision-making.
+Due to the complex and fluctuating nature of LDP (Landed Duty Paid) costs—such as variations in freight charges, import duties, customs fees, and taxes—a dedicated **"LDP Factor"** is assigned to each vendor within MS Access. This approach enables easier, faster, and real-time manipulation of cost data, ensuring more efficient analysis and decision-making.
+
+In this specific sample case, the LDP factor—which reflects the ratio of LDP cost to FOB cost—varies across vendors. Vendor A has the highest LDP factor at approximately 2.32, indicating higher additional costs beyond the initial FOB price. Vendor B and Vendor C have lower LDP factors of 1.83 and 1.84 respectively, suggesting more favorable landed costs. These factors provide valuable insights for evaluating and optimizing purchasing decisions based on total landed costs.
+
+| **Vendor** | **LDP Factor** |
+|------------|----------------|
+| Vendor A | ≈ 2.32         |
+| Vendor B | ≈ 1.83         |
+| Vendor C | ≈ 1.84         |
 
 MS Access is used instead of SQL Server because it offers a more user-friendly interface, allowing for quick updates and modifications without the need for complex SQL queries or database management expertise. Its intuitive design makes it easier to adjust LDP factors dynamically, providing greater flexibility in cost evaluations and purchasing strategies. By leveraging MS Access, the LDP factor can be efficiently maintained and adjusted, ensuring accurate and up-to-date landed cost comparisons across multiple vendors. This streamlined approach enhances decision-making and optimizes overall cost management.
 
+To connect SQL Server tables to MS Access,linked tables are used, which allow real-time access and manipulation of SQL Server data directly within Access. To set this up, open MS Access database and navigate to External Data > New Data Source > From Database > ODBC Database, then choose to link to the data source. If you don't have an existing ODBC connection, you can create one by selecting the appropriate SQL Server driver, entering your server details, and choosing the authentication method.
 
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
+Link all the Vendor FOB tables generated in the previous step to MS Access to enable further manipulation.
 
