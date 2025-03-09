@@ -159,7 +159,7 @@ The table below provides an example of the intended structure of the Vendor_A_Qu
 | P1003      | 177.12     | 2024-08-29 |
 | P1003      | 175.98     | 2025-01-05 |
 
-> **Note:** This table does not include all records from the actual dataset, with part numbers and pricing information modified for confidentiality.
+> **Note:** This table is a representative sample and does not include all records from the actual dataset. Part numbers and pricing information have been modified for confidentiality.
 
 
 
