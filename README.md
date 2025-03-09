@@ -168,9 +168,11 @@ These improvements will enhance data organization and facilitate more informed d
 
 To implement these transformations, the `Vendor_A_Quotes_Master` table will serve as the foundation for structuring and refining the data. The result will be the `Vendor_A_FOB` table, which provides a streamlined view of the most relevant pricing information for Vendor A.  
 
-To automate this process, a stored procedure will be developed to extract, transform, and load (ETL) the necessary data from the `Vendor_A_Quotes_Master` table. This stored procedure will keep the `Vendor_A_FOB` table continuously updated with the latest pricing information, improving efficiency, data accuracy, and price tracking over time.  
+To automate this process, a stored procedure will be developed to extract, transform, and load (ETL) the necessary data from the `Vendor_A_Quotes_Master` table. This stored procedure will keep the `Vendor_A_FOB` table continuously updated with the latest pricing information, improving efficiency, data accuracy, and price tracking over time.
 
-The following SQL query defines the stored procedure responsible for generating and maintaining the `Vendor_A_FOB` table:
+The following SQL code create stored procedure called `Vendor_A_FOB_Update` responsible for generating and maintaining the `Vendor_A_FOB` table:
+
+> **Note:** Each stored procedure for each vendor should be created in the same manner
 
 ```sql
 USE [Master]
@@ -244,6 +246,7 @@ BEGIN
 END;
 GO
 ```
+**2.** Executing above code will generate the stored procedure 'Vendor_A_FOB_Update', In SSMS, you can find stored procedures by expanding Databases > [Your Database] > Programmability > Stored Procedures in the Object Explorer, or by running SELECT name FROM sys.procedures; to list them. In Order to create the 'Vendor_A_FOB` table
 
 
 | PartNumber | FOB_Heb_Active | Most_Recent_Date | 2024-03-15_FOB | 2024-07-26_FOB | 2024-08-29_FOB | 2024-11-18_FOB | 2025-01-05_FOB |
