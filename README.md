@@ -111,7 +111,7 @@ WITH (FORMAT = 'CSV', FIRSTROW = 2, FIELDTERMINATOR = ',', ROWTERMINATOR = '\n')
 
 **3.**  After uploading all quote files from vendors, a comprehensive master quote table should be created for each vendor by systematically appending all received quotes. This process consolidates quotes from different dates into a single dataset, enabling seamless analysis, comparison, and informed decision-making. A master quotes table should be created for each vendor using the same approach.Future quotes can be incorporated into the master table using the INSERT INTO function in SQL, ensuring the dataset remains up to date for ongoing analysis and decision-making.
 
-Below is the SQL code to append all quotes from different dates for Vendor A, creating the Vendor_A_Quotes_Master table:
+Below is the SQL code to append all quotes from different dates for Vendor A, creating the `Vendor_A_Quotes_Master` table:
 
 ```sql
 USE Master;
@@ -159,13 +159,13 @@ The table below provides an example of the intended structure of the Vendor_A_Qu
 
 ### Analysis
 
-**1.** After consolidating all quotes for each vendor, the dataset requires further refinement to enhance visibility and improve price tracking. To achieve this, additional columns should be introduced to display dates more clearly, allowing for easier analysis of price fluctuations over time. Additionally, two key columns should be created: Active FOB, which reflects the most up-to-date and relevant price, and Most Recent Quote Date, which captures the latest available quote for each part. These adjustments will improve data organization and facilitate more informed decision-making.
+**1.** After consolidating all quotes for each vendor, the dataset requires further refinement to enhance visibility and improve price tracking. To achieve this, additional columns should be introduced to display dates more clearly, allowing for easier analysis of price fluctuations over time. Additionally, two key columns should be created: `Vendor_A_FOB_Active`, which reflects the most up-to-date and relevant price, and `Most_Recent_Date`, which captures the latest available quote for each part. These adjustments will improve data organization and facilitate more informed decision-making.
 
-To implement these transformations in SQL, I will use the Vendor_A_Quotes_Master table as the foundation to structure and refine the data. This process will ultimately generate the Vendor_A_FOB table, which will provide a streamlined view of the most relevant pricing information for Vendor A.
+To implement these transformations in SQL, I will use the `Vendor_A_Quotes_Master` table as the foundation to structure and refine the data. This process will ultimately generate the `Vendor_A_FOB` table, which will provide a streamlined view of the most relevant pricing information for Vendor A.
 
-To automate the creation of this table, we will develop a stored procedure that extracts, transforms, and loads (ETL) the necessary data from the Vendor_A_Quotes_Master table. This stored procedure will ensure that the Vendor_A_FOB table remains updated with the latest pricing information, improving efficiency and data accuracy while enabling seamless price tracking over time.
+To automate the creation of this table, we will develop a stored procedure that extracts, transforms, and loads (ETL) the necessary data from the `Vendor_A_Quotes_Master` table. This stored procedure will ensure that the `Vendor_A_FOB` table remains updated with the latest pricing information, improving efficiency and data accuracy while enabling seamless price tracking over time.
 
-The following SQL query creates the stored procedure responsible for generating and maintaining the Vendor_A_FOB table:
+The following SQL query creates the stored procedure responsible for generating and maintaining the `Vendor_A_FOB` table:
 
 ```sql
 USE [Master]
