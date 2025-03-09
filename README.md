@@ -153,7 +153,6 @@ The table below provides an example of the intended structure of the Vendor_A_Qu
 | P1003      | 175.32     | 2024-03-15 |
 | P1003      | 176.89     | 2024-07-26 |
 | P1003      | 177.12     | 2024-08-29 |
-| P1003      | 175.98     | 2025-01-05 |
 
 > **Note:** This table is a representative sample and does not include all records from the actual dataset. Part numbers and pricing information have been modified for confidentiality.
 
@@ -239,6 +238,13 @@ BEGIN
 END;
 GO
 ```
+rsult shoudl bee
+
+| PartNumber | FOB_Heb_Active | Most_Recent_Date | 2024-03-15_FOB | 2024-07-26_FOB | 2024-08-29_FOB | 2024-11-18_FOB | 2025-01-05_FOB |
+|------------|---------------|------------------|----------------|----------------|----------------|----------------|----------------|
+| P1001      | 121.34        | 2025-01-05       | 120.19         | 119.58         | NaN            | NaN            | 121.34         |
+| P1002      | 210.89        | 2025-01-05       | 210.45         | NaN            | 212.36         | 209.78         | 210.89         |
+| P1003      | 177.12        | 2024-08-29       | 175.32         | 176.89         | 177.12         | NaN            | NaN            |
 
 
 
