@@ -246,8 +246,14 @@ BEGIN
 END;
 GO
 ```
-**2.** Executing above code will generate the stored procedure 'Vendor_A_FOB_Update', In SSMS, you can find stored procedures by expanding Databases > [Your Database] > Programmability > Stored Procedures in the Object Explorer, or by running SELECT name FROM sys.procedures; to list them. In Order to create the 'Vendor_A_FOB` table
+**2.** Executing above code will generate the stored procedure 'Vendor_A_FOB_Update', In SSMS, you can find stored procedures by expanding Databases > [Your Database] > Programmability > Stored Procedures in the Object Explorer, or by running SELECT name FROM sys.procedures; to list them. To create the Vendor_A_FOB table, execute the stored procedure using the following command:
 
+```sql
+EXECUTE Vendor_A_FOB_Update;
+```
+> **Note:** Each stored procedure should be executed for each vendor in the same manner
+
+Upon execution, the Vendor_A_FOB table will be created in the database with the following structure:
 
 | PartNumber | FOB_Heb_Active | Most_Recent_Date | 2024-03-15_FOB | 2024-07-26_FOB | 2024-08-29_FOB | 2024-11-18_FOB | 2025-01-05_FOB |
 |------------|---------------|------------------|----------------|----------------|----------------|----------------|----------------|
@@ -256,6 +262,28 @@ GO
 | P1003      | 177.12        | 2024-08-29       | 175.32         | 176.89         | 177.12         | NaN            | NaN            |
 
 > **Note:** This table is a representative sample and does not include all records from the actual dataset. Part numbers and pricing information have been modified for confidentiality.
+
+**3.** After generating the Vendor FOB tables, which include the Active FOB price along with historical quote data, I will optimize purchasing decisions based on the pricing information provided by vendors. This approach will ensure more strategic and cost-effective sourcing decisions.
+
+FOB (Free On Board) represents the cost of goods up to the point where they are loaded onto a shipping vessel at the origin port. It covers manufacturing costs, transportation to the port, export customs clearance, and loading fees. Once the goods are on board, responsibility and costs shift to the buyer, who must then manage freight charges, insurance, import duties, taxes, and inland transportation. While FOB pricing offers an initial snapshot of product costs, it does not account for the significant expenses incurred in shipping and importing the goods to their final destination.
+
+In contrast, LDP (Landed Duty Paid) encompasses all costs required to deliver goods to the buyer’s location. This includes shipping, insurance, import duties, customs fees, and inland transportation. For purchasing decisions, LDP is a more critical factor, as it reflects the true total cost of acquiring goods—capturing all hidden and variable expenses. This comprehensive view is essential for accurate pricing strategies and profit margin calculations. While FOB prices may initially seem lower, they can overlook substantial costs that arise later, leading to potential financial surprises. Therefore, considering LDP costs ensures more accurate financial planning, better forecasting, and smarter decision-making in global sourcing.
+
+Moreover, LDP costs can vary significantly depending on the country of import. Different countries have unique import regulations, tariff rates, customs procedures, and tax policies, all of which directly impact the final landed cost. For instance, countries with high import duties, stricter customs regulations, or additional local taxes will naturally result in higher LDP costs. Additionally, factors like currency fluctuations, fuel surcharges, and varying transportation infrastructure can influence shipping and inland transportation expenses. Understanding these country-specific variables is essential for accurate cost estimation and strategic purchasing. By factoring in these differences, I can better assess total costs and negotiate more effectively with vendors, ensuring a more efficient and profitable sourcing process.
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 
 
