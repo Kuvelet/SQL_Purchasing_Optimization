@@ -255,7 +255,7 @@ EXECUTE Vendor_A_FOB_Update;
 
 Upon execution, the Vendor_A_FOB table will be created in the database with the following structure:
 
-| PartNumber | FOB_Heb_Active | Most_Recent_Date | 2024-03-15_FOB | 2024-07-26_FOB | 2024-08-29_FOB | 2024-11-18_FOB | 2025-01-05_FOB |
+| PartNumber | FOB_VendorA_Active | Most_Recent_Date | 2024-03-15_FOB | 2024-07-26_FOB | 2024-08-29_FOB | 2024-11-18_FOB | 2025-01-05_FOB |
 |------------|---------------|------------------|----------------|----------------|----------------|----------------|----------------|
 | P1001      | 121.34        | 2025-01-05       | 120.19         | 119.58         | NaN            | NaN            | 121.34         |
 | P1002      | 210.89        | 2025-01-05       | 210.45         | NaN            | 212.36         | 209.78         | 210.89         |
@@ -269,7 +269,27 @@ FOB (Free On Board) represents the cost of goods up to the point where they are 
 
 In contrast, LDP (Landed Duty Paid) encompasses all costs required to deliver goods to the buyer’s location. This includes shipping, insurance, import duties, customs fees, and inland transportation. For purchasing decisions, LDP is a more critical factor, as it reflects the true total cost of acquiring goods—capturing all hidden and variable expenses. This comprehensive view is essential for accurate pricing strategies and profit margin calculations. While FOB prices may initially seem lower, they can overlook substantial costs that arise later, leading to potential financial surprises. Therefore, considering LDP costs ensures more accurate financial planning, better forecasting, and smarter decision-making in global sourcing.
 
-Moreover, LDP costs can vary significantly depending on the country of import. Different countries have unique import regulations, tariff rates, customs procedures, and tax policies, all of which directly impact the final landed cost. For instance, countries with high import duties, stricter customs regulations, or additional local taxes will naturally result in higher LDP costs. Additionally, factors like currency fluctuations, fuel surcharges, and varying transportation infrastructure can influence shipping and inland transportation expenses. Understanding these country-specific variables is essential for accurate cost estimation and strategic purchasing. By factoring in these differences, I can better assess total costs and negotiate more effectively with vendors, ensuring a more efficient and profitable sourcing process.
+LDP costs can vary significantly depending on the country of import. Different countries have unique import regulations, tariff rates, customs procedures, and tax policies, all of which directly impact the final landed cost. For instance, countries with high import duties, stricter customs regulations, or additional local taxes will naturally result in higher LDP costs. Additionally, factors like currency fluctuations, fuel surcharges, and varying transportation infrastructure can influence shipping and inland transportation expenses. Understanding these country-specific variables is essential for accurate cost estimation and strategic purchasing. By factoring in these differences, I can better assess total costs and negotiate more effectively with vendors, ensuring a more efficient and profitable sourcing process.
+
+The table below presents an example of an imported SKU, illustrating how the LDP (Landed Duty Paid) cost can significantly impact purchasing decisions. While Vendor A initially offers the lowest FOB (Free On Board) cost, they ultimately present the highest LDP cost due to higher associated expenses such as import duties, freight, insurance, and inland transportation. This demonstrates how focusing solely on FOB pricing can be misleading, as it fails to account for the full range of costs required to bring the product to its final destination.
+
+In this specific case, the SKU will be procured from Vendor C, who, despite quoting the second-best FOB cost, offers the lowest LDP cost. This lower LDP is attributed to more favorable logistics costs, reduced import duties, and efficient transportation charges, which collectively result in a more cost-effective solution for the company.
+
+This example highlights the importance of evaluating LDP costs rather than relying solely on FOB pricing. By considering the complete cost structure—including all expenses involved in shipping, customs, and delivery—better purchasing decisions can be made. Ultimately, choosing Vendor C ensures that the company minimizes its overall landed costs, thereby enhancing profitability and supply chain efficiency.
+
+| **Cost Component**   | **VendorA <br> (Country A)** | **VendorB <br>(Country B)** | **VendorC <br> (Country C)** |
+|----------------------|--------------|--------------|--------------|
+| FOB Cost         | $90          | $100         | $95          |
+| Freight Cost     | $30          | $20          | $18          |
+| Insurance        | $6           | $5           | $4           |
+| Import Duty      | $40          | $25          | $30          |
+| Customs Fees     | $8           | $6           | $4           |
+| VAT/Taxes        | $20          | $15          | $12          |
+| Inland Transport | $15          | $12          | $11          |
+| **Total LDP Cost**   | **$209**     | **$183**     | **$175**     |
+
+
+
 
 
 
