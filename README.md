@@ -109,6 +109,60 @@ FROM 'C:\CSV_Imports\Vendor_A_Quote_03052025.csv'
 WITH (FORMAT = 'CSV', FIRSTROW = 2, FIELDTERMINATOR = ',', ROWTERMINATOR = '\n');
 ```
 
+**3.**  After uploading all quote files from vendors, a comprehensive master quote table should be created for each vendor by systematically appending all received quotes. This process consolidates quotes from different dates into a single dataset, enabling seamless analysis, comparison, and informed decision-making. A master quotes table should be created for each vendor using the same approach.Future quotes can be incorporated into the master table using the INSERT INTO function in SQL, ensuring the dataset remains up to date for ongoing analysis and decision-making.
+
+Below is the SQL code to append all quotes from different dates for Vendor A, creating the Vendor_A_Quotes_Master table:
+
+```sql
+USE Master;
+
+CREATE TABLE Vendor_A_Quotes_Master (
+    PartNumber NVARCHAR(50),
+    VendorA_FOB DECIMAL(10,2),
+    QuoteDate DATE,
+    SourceTable NVARCHAR(50)
+);
+
+INSERT INTO Vendor_A_Quotes_Master (PartNumber, VendorA_FOB, QuoteDate, SourceTable)
+SELECT PartNumber, VendorA_FOB, Date, 'Vendor_A_Quote_03152024' FROM Vendor_A_Quote_03152024
+UNION ALL
+SELECT PartNumber, VendorA_FOB, Date, 'Vendor_A_Quote_07262024' FROM Vendor_A_Quote_07262024
+UNION ALL
+SELECT PartNumber, VendorA_FOB, Date, 'Vendor_A_Quote_11182024' FROM Vendor_A_Quote_11182024
+UNION ALL
+SELECT PartNumber, VendorA_FOB, Date, 'Vendor_A_Quote_08292024' FROM Vendor_A_Quote_08292024
+UNION ALL
+SELECT PartNumber, VendorA_FOB, Date, 'Vendor_A_Quote_01052025' FROM Vendor_A_Quote_01052025
+UNION ALL
+SELECT PartNumber, VendorA_FOB, Date, 'Vendor_A_Quote_02212025' FROM Vendor_A_Quote_02212025
+UNION ALL
+SELECT PartNumber, VendorA_FOB, Date, 'Vendor_A_Quote_03052025' FROM Vendor_A_Quote_03052025;
+```
+
+The table below provides an example of the intended structure of the Vendor_A_Quotes_Master table. It consolidates all quote data from Vendor A over multiple dates.
+
+| PartNumber | VendorA_FOB |  Date  |
+|------------|------------|------------|
+| P1001      | 120.19     | 2024-03-15 |
+| P1001      | 119.58     | 2024-07-26 |
+| P1001      | 120.50     | 2024-11-18 |
+| P1001      | 122.84     | 2024-08-29 |
+| P1001      | 121.34     | 2025-01-05 |
+| P1002      | 210.45     | 2024-03-15 |
+| P1002      | 211.92     | 2024-07-26 |
+| P1002      | 209.78     | 2024-11-18 |
+| P1002      | 212.36     | 2024-08-29 |
+| P1002      | 210.89     | 2025-01-05 |
+| P1003      | 175.32     | 2024-03-15 |
+| P1003      | 176.89     | 2024-07-26 |
+| P1003      | 174.55     | 2024-11-18 |
+| P1003      | 177.12     | 2024-08-29 |
+| P1003      | 175.98     | 2025-01-05 |
+
+> **Note:** This table does not include all records from the actual dataset, with part numbers and pricing information modified for confidentiality.
+
+
+
 
 
 
