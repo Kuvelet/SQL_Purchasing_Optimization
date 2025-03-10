@@ -359,8 +359,7 @@ LEFT JOIN master.dbo.LDP_factors AS fa ON fa.Vendor = 'Vendor A'
 LEFT JOIN master.dbo.LDP_factors AS fb ON fb.Vendor = 'Vendor B'
 LEFT JOIN master.dbo.LDP_factors AS fc ON fc.Vendor = 'Vendor C';
 ```
-this is the output belowwwww
-
+The output of the query shows that Vendor C offers the lowest LDP cost for P1001, Vendor B for P1002, and Vendor A for P1003. These variations result from differences in FOB prices and LDP factors. By selecting vendors based on the minimum LDP cost for each SKU, purchasing decisions can be optimized for greater cost efficiency.
 
 | PartNumber | Min_LDP_Cost | Min_LDP_Vendor | LDP_VendorA | LDP_VendorB | LDP_VendorC | FOB_VendorA_Active | FOB_VendorB_Active | FOB_VendorC_Active | LDP_Factor_VendorA | LDP_Factor_VendorB | LDP_Factor_VendorC |
 |------------|--------------|----------------|-------------|-------------|-------------|--------------------|--------------------|--------------------|--------------------|--------------------|--------------------|
