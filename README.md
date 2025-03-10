@@ -298,7 +298,8 @@ In this specific sample case, the LDP factor—which reflects the ratio of LDP c
 | Vendor B |   1.83         |
 | Vendor C |   1.84         |
 
-Below query will fetch all unique numbers from all Vendor FOB tables, `Vendor_A_FOB`, `Vendor_B_FOB`, `Vendor_C_FOB`, calculate LDP costs using the `LDP_Factors' table, compare and find the minimum LDP cost and show the vendor name with the minimum LDp cost
+The following query retrieves all unique part numbers from the Vendor_A_FOB, Vendor_B_FOB, and Vendor_C_FOB tables. It calculates the LDP costs by applying the corresponding factors from the LDP_Factors table. The query then compares the LDP costs across vendors, identifies the minimum LDP cost for each part number, and displays the vendor offering the lowest cost.
+To enhance efficiency and simplify future updates, I recommend creating a stored procedure for this process. This will allow for easy re-execution of the query as new data becomes available, ensuring consistency and reducing manual effort.
 
 ```sql
 SELECT
@@ -358,6 +359,14 @@ LEFT JOIN master.dbo.LDP_factors AS fa ON fa.Vendor = 'Vendor A'
 LEFT JOIN master.dbo.LDP_factors AS fb ON fb.Vendor = 'Vendor B'
 LEFT JOIN master.dbo.LDP_factors AS fc ON fc.Vendor = 'Vendor C';
 ```
+this is the output belowwwww
+
+
+| PartNumber | Min_LDP_Cost | Min_LDP_Vendor | LDP_VendorA | LDP_VendorB | LDP_VendorC | FOB_VendorA_Active | FOB_VendorB_Active | FOB_VendorC_Active | LDP_Factor_VendorA | LDP_Factor_VendorB | LDP_Factor_VendorC |
+|------------|--------------|----------------|-------------|-------------|-------------|--------------------|--------------------|--------------------|--------------------|--------------------|--------------------|
+| P1001      | 281.03       | Vendor C       | 281.51      | 282.87      | 281.03      | 121.34             | 154.03             | 152.73             | 2.32               | 1.83               | 1.84               |
+| P1002      | 439.84       | Vendor B       | 489.27      | 439.84      | 488.72      | 210.89             | 240.35             | 265.61             | 2.32               | 1.83               | 1.84               |
+| P1003      | 410.91       | Vendor A       | 410.91      | 412.43      | 411.24      | 177.12             | 225.37             | 223.28             | 2.32               | 1.83               | 1.84               |
 
 
 
