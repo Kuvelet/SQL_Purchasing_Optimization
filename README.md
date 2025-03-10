@@ -300,12 +300,64 @@ In this specific sample case, the LDP factor—which reflects the ratio of LDP c
 
 Below query will fetch all unique numbers from all Vendor FOB tables, `Vendor_A_FOB`, `Vendor_B_FOB`, `Vendor_C_FOB`, calculate LDP costs using the `LDP_Factors' table, compare and find the minimum LDP cost and show the vendor name with the minimum LDp cost
 
+```sql
+SELECT
+    COALESCE(a.PartNumber, b.PartNumber, c.PartNumber) AS PartNumber,
 
-| PartNumber | FOB_VendorA | FOB_VendorB | FOB_VendorC | LDP_Factor_VendorA | LDP_Factor_VendorB | LDP_Factor_VendorC | LDP_VendorA | LDP_VendorB | LDP_VendorC | Min_LDP_Cost | Min_LDP_Vendor |
-|------------|-------------|-------------|-------------|--------------------|--------------------|--------------------|-------------|-------------|-------------|--------------|----------------|
-| P1001      | 121.34      | 154.03      | 152.73      | 2.32               | 1.83               | 1.84               | 281.51      | 282.87      | 281.03      | 281.03       | Vendor C       |
-| P1002      | 210.89      | 240.35      | 265.61      | 2.32               | 1.83               | 1.84               | 489.27      | 439.84      | 488.72      | 439.84       | Vendor B       |
-| P1003      | 177.12      | 225.37      | 223.28      | 2.32               | 1.83               | 1.84               | 410.91      | 412.43      | 411.24      | 410.91       | Vendor A       |
+    -- Original FOB Prices
+    a.FOB_VendorA_Active,
+    b.FOB_VendorB_Active,
+    c.FOB_VendorC_Active,
+
+    -- LDP Factors
+    fa.LDP_Factor AS LDP_Factor_VendorA,
+    fb.LDP_Factor AS LDP_Factor_VendorB,
+    fc.LDP_Factor AS LDP_Factor_VendorC,
+
+    -- LDP Costs
+    a.FOB_VendorA_Active * fa.LDP_Factor AS LDP_VendorA,
+    b.FOB_VendorB_Active * fb.LDP_Factor AS LDP_VendorB,
+    c.FOB_VendorC_Active * fc.LDP_Factor AS LDP_VendorC,
+
+    -- Minimum LDP Cost
+    LEAST(
+        a.FOB_VendorA_Active * fa.LDP_Factor,
+        b.FOB_VendorB_Active * fb.LDP_Factor,
+        c.FOB_VendorC_Active * fc.LDP_Factor
+    ) AS Min_LDP_Cost,
+
+    -- Vendor with Minimum LDP Cost
+    CASE 
+        WHEN (a.FOB_VendorA_Active * fa.LDP_Factor) = LEAST(
+            a.FOB_VendorA_Active * fa.LDP_Factor,
+            b.FOB_VendorB_Active * fb.LDP_Factor,
+            c.FOB_VendorC_Active * fc.LDP_Factor
+        ) THEN 'Vendor A'
+        WHEN (b.FOB_VendorB_Active * fb.LDP_Factor) = LEAST(
+            a.FOB_VendorA_Active * fa.LDP_Factor,
+            b.FOB_VendorB_Active * fb.LDP_Factor,
+            c.FOB_VendorC_Active * fc.LDP_Factor
+        ) THEN 'Vendor B'
+        WHEN (c.FOB_VendorC_Active * fc.LDP_Factor) = LEAST(
+            a.FOB_VendorA_Active * fa.LDP_Factor,
+            b.FOB_VendorB_Active * fb.LDP_Factor,
+            c.FOB_VendorC_Active * fc.LDP_Factor
+        ) THEN 'Vendor C'
+        ELSE NULL
+    END AS Min_LDP_Vendor
+
+FROM 
+    master.dbo.Vendor_A_FOB AS a
+FULL OUTER JOIN 
+    master.dbo.Vendor_B_FOB AS b ON a.PartNumber = b.PartNumber
+FULL OUTER JOIN 
+    master.dbo.Vendor_C_FOB AS c ON COALESCE(a.PartNumber, b.PartNumber) = c.PartNumber
+
+-- Joining with LDP Factors
+LEFT JOIN master.dbo.LDP_factors AS fa ON fa.Vendor = 'Vendor A'
+LEFT JOIN master.dbo.LDP_factors AS fb ON fb.Vendor = 'Vendor B'
+LEFT JOIN master.dbo.LDP_factors AS fc ON fc.Vendor = 'Vendor C';
+```
 
 
 
