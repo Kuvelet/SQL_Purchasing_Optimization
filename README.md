@@ -377,7 +377,7 @@ The output of the query shows that Vendor C offers the lowest LDP cost for P1001
 
 
 
-
+a
 
 
 MS Access is used instead of SQL Server because it offers a more user-friendly interface, allowing for quick updates and modifications without the need for complex SQL queries or database management expertise. Its intuitive design makes it easier to adjust LDP factors dynamically, providing greater flexibility in cost evaluations and purchasing strategies. By leveraging MS Access, the LDP factor can be efficiently maintained and adjusted, ensuring accurate and up-to-date landed cost comparisons across multiple vendors. This streamlined approach enhances decision-making and optimizes overall cost management.
