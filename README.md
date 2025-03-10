@@ -298,6 +298,22 @@ In this specific sample case, the LDP factor—which reflects the ratio of LDP c
 | Vendor B |   1.83         |
 | Vendor C |   1.84         |
 
+Below query will fetch all unique numbers from all Vendor FOB tables, `Vendor_A_FOB`, `Vendor_B_FOB`, `Vendor_C_FOB`, calculate LDP costs using the `LDP_Factors' table, compare and find the minimum LDP cost and show the vendor name with the minimum LDp cost
+
+
+| PartNumber | FOB_VendorA | FOB_VendorB | FOB_VendorC | LDP_Factor_VendorA | LDP_Factor_VendorB | LDP_Factor_VendorC | LDP_VendorA | LDP_VendorB | LDP_VendorC | Min_LDP_Cost | Min_LDP_Vendor |
+|------------|-------------|-------------|-------------|--------------------|--------------------|--------------------|-------------|-------------|-------------|--------------|----------------|
+| P1001      | 121.34      | 154.03      | 152.73      | 2.32               | 1.83               | 1.84               | 281.51      | 282.87      | 281.03      | 281.03       | Vendor C       |
+| P1002      | 210.89      | 240.35      | 265.61      | 2.32               | 1.83               | 1.84               | 489.27      | 439.84      | 488.72      | 439.84       | Vendor B       |
+| P1003      | 177.12      | 225.37      | 223.28      | 2.32               | 1.83               | 1.84               | 410.91      | 412.43      | 411.24      | 410.91       | Vendor A       |
+
+
+
+
+
+
+
+
 
 
 
