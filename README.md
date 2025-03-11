@@ -298,8 +298,10 @@ In this specific sample case, the LDP factor—which reflects the ratio of LDP c
 | Vendor B |   1.83         |
 | Vendor C |   1.84         |
 
+> **Note:** This table is a representative sample and does not include all records from the actual dataset.Information have been modified for confidentiality.
+
 The following query retrieves all unique part numbers from the Vendor_A_FOB, Vendor_B_FOB, and Vendor_C_FOB tables. It calculates the LDP costs by applying the corresponding factors from the LDP_Factors table. The query then compares the LDP costs across vendors, identifies the minimum LDP cost for each part number, and displays the vendor offering the lowest cost.
-To enhance efficiency and simplify future updates, I recommend creating a stored procedure for this process. This will allow for easy re-execution of the query as new data becomes available, ensuring consistency and reducing manual effort.
+To enhance efficiency and simplify future updates, I recommend creating a stored procedure that creates a `Vendor_LDP` table for this process. This will allow for easy re-execution of the query as new data becomes available, ensuring consistency and reducing manual effort.
 
 ```sql
 SELECT
@@ -367,37 +369,114 @@ The output of the query shows that Vendor C offers the lowest LDP cost for P1001
 | P1002      | 439.84       | Vendor B       | 489.27      | 439.84      | 488.72      | 210.89             | 240.35             | 265.61             | 2.32               | 1.83               | 1.84               |
 | P1003      | 410.91       | Vendor A       | 410.91      | 412.43      | 411.24      | 177.12             | 225.37             | 223.28             | 2.32               | 1.83               | 1.84               |
 
+> **Note:** This table is a representative sample and does not include all records from the actual dataset.Information have been modified for confidentiality.
+---
 
+### Results & Findings
+---
 
+In a **big data environment**, optimizing purchasing decisions requires managing large datasets, analyzing historical trends, and ensuring real-time responsiveness. The developed algorithm is designed to handle these complexities by dynamically calculating costs, comparing historical trends, and automating decision-making processes.
 
+---
 
+#### **Algorithm for Big Data Purchasing Optimization**
 
+1. **Comprehensive Data Aggregation**:  
+   The process begins by aggregating extensive historical and current **FOB (Free On Board)** pricing data from all vendor tables. Historical quote data is processed to extract both the **latest active FOB cost** and past prices, ensuring comprehensive visibility into price trends for each part number.
 
+2. **Historical Price Comparison**:  
+   The algorithm captures and analyzes historical FOB prices for each part number across different time periods. This allows for:
+   - **Trend Analysis**: Identifying patterns in price fluctuations over time.  
+   - **Vendor Consistency**: Assessing which vendors offer stable pricing versus those with volatile cost changes.  
+   - **Strategic Forecasting**: Enabling predictive insights for future procurement strategies based on historical price movements.  
 
+   This historical context ensures that purchasing decisions are informed not only by current prices but also by trends that may impact long-term cost management.
 
+3. **Dynamic and Scalable LDP Cost Calculation**:  
+   For each part number, the algorithm calculates the **LDP (Landed Duty Paid) cost** by multiplying the active FOB price by the corresponding **LDP factor**. These factors, reflecting additional costs like freight, insurance, import duties, and inland transportation, are maintained in the `LDP_Factors` table. The dynamic linkage ensures that any changes to LDP factors are automatically reflected in real-time cost calculations.
 
+4. **Cross-Vendor and Historical Cost Comparison**:  
+   The algorithm compares LDP costs across all vendors for each part number, identifying the **minimum LDP cost** and the corresponding vendor. Additionally, it contrasts current LDP costs with historical trends to identify:
+   - **Cost Anomalies**: Detecting significant deviations from historical averages.  
+   - **Vendor Reliability**: Highlighting vendors that consistently maintain competitive costs over time.  
+   - **Strategic Opportunities**: Recognizing when historical lows or highs suggest negotiation opportunities.  
 
-a
+5. **Optimized Result Structuring**:  
+   The final dataset is structured for **big data consumption**, including:
+   - **Part Numbers** for unique identification.  
+   - **Historical and Active FOB Prices** for trend analysis.  
+   - **LDP Factors** dynamically linked to current data.  
+   - **Calculated LDP Costs** for each vendor.  
+   - The **Minimum LDP Cost** and corresponding **vendor**, ensuring clear purchasing guidance.
 
+6. **Automated Process for Scalability**:  
+   To manage the scale and complexity of big data, it is recommended to implement a **stored procedure**. This automated process enables:
+   - Continuous updates as new pricing data is received.  
+   - Instant recalculation of historical and active LDP costs.  
+   - Consistent, repeatable analyses without manual intervention.  
+   - Real-time insights to support agile and informed purchasing decisions.
 
-MS Access is used instead of SQL Server because it offers a more user-friendly interface, allowing for quick updates and modifications without the need for complex SQL queries or database management expertise. Its intuitive design makes it easier to adjust LDP factors dynamically, providing greater flexibility in cost evaluations and purchasing strategies. By leveraging MS Access, the LDP factor can be efficiently maintained and adjusted, ensuring accurate and up-to-date landed cost comparisons across multiple vendors. This streamlined approach enhances decision-making and optimizes overall cost management.
+---
 
-To connect SQL Server tables to MS Access,linked tables are used, which allow real-time access and manipulation of SQL Server data directly within Access. To set this up, open MS Access database and navigate to External Data > New Data Source > From Database > ODBC Database, then choose to link to the data source. If you don't have an existing ODBC connection, you can create one by selecting the appropriate SQL Server driver, entering your server details, and choosing the authentication method.
+#### Why This Approach is Optimized for Big Data and Historical Analysis
 
-Link all the Vendor FOB tables generated in the previous step to MS Access to enable further manipulation.
+- **Scalability**: The algorithm is designed to process large datasets efficiently, ensuring consistent performance as data volumes grow.  
+- **Historical Context**: Analyzing historical price trends provides deeper insights into vendor behavior, pricing patterns, and future cost forecasting.  
+- **Dynamic Cost Management**: Real-time updates to LDP factors ensure that cost calculations are always accurate and reflect current market conditions.  
+- **Automated Decision-Making**: Stored procedures streamline data processing, minimize manual intervention, and allow for rapid decision-making.  
+- **Strategic Flexibility**: By comparing current and historical trends, purchasing strategies can be adjusted proactively to maximize cost savings.
 
-**4.** After linking the Vendor FOB tables in MS Access, create a union query to consolidate all unique part numbers across the FOB tables. This approach ensures that every part number is captured, even if it is only quoted by select vendors.
+---
 
-```sql
-SELECT PartNumber FROM Vendor_A_FOB
-UNION
-SELECT PartNumber FROM Vendor_B_FOB
-UNION
-SELECT PartNumber FROM Vendor_C_FOB
-UNION
-SELECT PartNumber FROM Vendor_D_FOB
-UNION
-SELECT PartNumber FROM Vendor_E_FOB;
-```
-Save this query as All_Unique_PartNumbers
+#### **Strategic Value of Historical Price Comparison in Big Data**
 
+- **Trend Identification**: Understanding how prices have fluctuated over time enables better negotiation strategies and vendor evaluations.  
+- **Cost Stability Analysis**: Vendors with consistent pricing histories can be prioritized to reduce long-term procurement risks.  
+- **Forecasting and Planning**: Historical data provides valuable insights for forecasting future price movements, aiding in budgeting and strategic planning.  
+- **Negotiation Leverage**: Recognizing when current prices deviate from historical norms creates opportunities for cost negotiations.  
+
+---
+
+This **big data-optimized approach**, enhanced by historical price comparisons, ensures that purchasing decisions are **data-driven, strategically informed, and cost-effective**. It empowers organizations to manage large datasets efficiently while maintaining the flexibility to adapt to changing market conditions and historical trends.
+
+### Next Steps
+---
+
+To further enhance the purchasing optimization process and ensure long-term scalability, the following strategic next steps are recommended:
+
+1. **Automate LDP Factor Updates**:  
+   Establish a process for automatically updating the `LDP_Factors` table based on real-time changes in shipping rates, customs fees, and other related costs. This will ensure continuous accuracy in LDP cost calculations.
+
+2. **Implement Regular Data Refresh Schedules**:  
+   Set up automated schedules to refresh vendor quote data, ensuring the system always reflects the most recent FOB prices and historical trends.
+
+3. **Utilize MS Access for Exploratory Analysis**:  
+   Leverage **MS Access** as a flexible and accessible tool for exploratory data analysis and validation. It can be used to perform ad-hoc queries, analyze specific vendor pricing trends, and provide quick data insights. MS Access also offers an interface for non-technical stakeholders to view summarized data, facilitating easier collaboration and faster decision-making.
+
+4. **Develop Dynamic Reporting Dashboards**:  
+   Create interactive dashboards using tools like **Power BI** or **Tableau** for real-time visualization of price trends, LDP cost comparisons, and vendor performance. This will improve decision-making efficiency and stakeholder engagement.
+
+5. **Integrate Predictive Analytics**:  
+   Leverage machine learning models to forecast future pricing trends based on historical data and market indicators. This will aid in proactive budgeting and negotiation strategies.
+
+6. **Enhance Stored Procedure Scalability**:  
+   Continuously monitor and optimize the stored procedures for performance improvements as data volumes increase, ensuring they remain efficient in processing large datasets.
+
+7. **Vendor Performance Monitoring**:  
+   Establish KPIs to track vendor pricing consistency, lead times, and delivery performance. This will support better long-term supplier relationship management.
+
+8. **Conduct Periodic Cost Reviews**:  
+   Schedule periodic reviews of LDP costs, comparing them against market benchmarks to ensure procurement strategies remain competitive.
+
+9. **Expand Data Sources**:  
+   Explore additional data sources such as market indexes, logistics rates, and global trade statistics to enhance the accuracy and depth of cost analyses.
+
+10. **Strengthen Data Governance**:  
+   Implement data validation and governance protocols to ensure data integrity, reduce discrepancies, and maintain a high level of data accuracy over time.
+
+11. **Training and Knowledge Sharing**:  
+    Provide training for the procurement and data analysis teams to ensure they are proficient in using the tools, understanding the analytics, and interpreting results for strategic decision-making.
+
+---
+
+By following these next steps, the purchasing optimization process will become more automated, data-driven, and scalable—ensuring cost-effective decisions while maintaining flexibility in adapting to market dynamics and future growth. Leveraging tools like **MS Access** for exploratory analysis will enhance collaboration, facilitate faster insights, and provide greater accessibility for non-technical teams.
